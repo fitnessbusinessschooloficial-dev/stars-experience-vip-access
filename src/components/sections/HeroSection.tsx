@@ -58,7 +58,7 @@ export const HeroSection = () => {
                 </p>
               </div>
               
-              <LeadCaptureForm variant="hero" />
+              <LeadCaptureForm variant="hero" origemForm="hero" />
             </div>
           </div>
         </div>

@@ -36,7 +36,7 @@ export const CaptureSection = () => {
               </p>
             </div>
 
-            <LeadCaptureForm variant="section" />
+            <LeadCaptureForm variant="section" origemForm="footer" />
 
             <div className="mt-8 flex items-start gap-3 bg-primary/5 border border-primary/20 rounded-xl p-6">
               <Sparkles className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
