@@ -1,8 +1,6 @@
 import { TrendingDown, TrendingUp, AlertCircle } from "lucide-react";
-
 export const ExperienceSection = () => {
-  return (
-    <section className="py-24 bg-background relative overflow-hidden">
+  return <section className="py-24 bg-background relative overflow-hidden">
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/20 rounded-full blur-[200px]"></div>
       </div>
@@ -16,7 +14,9 @@ export const ExperienceSection = () => {
             </h2>
           </div>
 
-          <div className="space-y-8 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+          <div className="space-y-8 animate-slide-up" style={{
+          animationDelay: '0.2s'
+        }}>
             <div className="bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-8 lg:p-12 shadow-card">
               <p className="text-lg text-muted-foreground leading-relaxed mb-6">
                 Há um ponto na jornada de todo empreendedor fitness onde o esforço não é mais suficiente.
@@ -48,13 +48,14 @@ export const ExperienceSection = () => {
               </div>
             </div>
 
-            <div className="bg-gradient-section border border-primary/20 rounded-2xl p-8 lg:p-12 space-y-6 shadow-glow animate-slide-up" style={{ animationDelay: '0.4s' }}>
+            <div className="bg-gradient-section border border-primary/20 rounded-2xl p-8 lg:p-12 space-y-6 shadow-glow animate-slide-up" style={{
+            animationDelay: '0.4s'
+          }}>
               <p className="text-lg leading-relaxed">
                 É uma imersão criada para te colocar em um ambiente onde <span className="text-primary font-semibold">crescimento é norma, não exceção</span>.
               </p>
               
-              <p className="text-lg leading-relaxed">
-                Onde você <span className="text-foreground font-semibold">aprende, aplica, conecta, cria</span> e sai com o seu próximo passo definido — sem dúvidas, sem confusão, sem travas.
+              <p className="text-lg leading-relaxed">Onde você aprende, aplica, conecta, cria e sai com o seu próximo passo definido sem dúvidas, sem confusão, sem travas.<span className="text-foreground font-semibold">aprende, aplica, conecta, cria</span> e sai com o seu próximo passo definido — sem dúvidas, sem confusão, sem travas.
               </p>
 
               <div className="pt-6 border-t border-border">
@@ -69,6 +70,5 @@ export const ExperienceSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
