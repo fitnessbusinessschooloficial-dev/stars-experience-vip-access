@@ -1,1 +1,4 @@
 project_id = "wshxooadaqvapruwuvpn"
+
+[functions.save-lead]
+verify_jwt = false

@@ -4,12 +4,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface LeadCaptureFormProps {
   variant?: "hero" | "section";
+  origemForm: "hero" | "footer";
 }
 
-export const LeadCaptureForm = ({ variant = "section" }: LeadCaptureFormProps) => {
+export const LeadCaptureForm = ({ variant = "section", origemForm }: LeadCaptureFormProps) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -20,17 +22,38 @@ export const LeadCaptureForm = ({ variant = "section" }: LeadCaptureFormProps) =
     e.preventDefault();
     setLoading(true);
 
-    // Simulate form submission
-    setTimeout(() => {
-      toast({
-        title: "🎉 Cadastro realizado com sucesso!",
-        description: "Você está na lista VIP. Em breve enviaremos mais informações.",
+    try {
+      const { data, error } = await supabase.functions.invoke('save-lead', {
+        body: {
+          nome: name,
+          email: email,
+          telefone: phone,
+          origem_form: origemForm
+        }
       });
-      setLoading(false);
+
+      if (error) {
+        throw error;
+      }
+
+      toast({
+        title: "✅ Dados enviados com sucesso!",
+        description: "Em breve você receberá o acesso prioritário ao Stars Experience.",
+      });
+
       setName("");
       setEmail("");
       setPhone("");
-    }, 1500);
+    } catch (error: any) {
+      console.error("Error submitting form:", error);
+      toast({
+        title: "❌ Erro ao enviar dados",
+        description: "Ocorreu um erro. Por favor, tente novamente.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const isHero = variant === "hero";
