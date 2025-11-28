@@ -38,12 +38,17 @@ export const LeadCaptureForm = ({ variant = "section", origemForm }: LeadCapture
 
       toast({
         title: "✅ Dados enviados com sucesso!",
-        description: "Em breve você receberá o acesso prioritário ao Stars Experience.",
+        description: "Redirecionando para o checkout...",
       });
 
       setName("");
       setEmail("");
       setPhone("");
+
+      // Redirect to checkout after successful submission
+      setTimeout(() => {
+        window.location.href = "https://pay.kiwify.com.br/5E7xAgI";
+      }, 1500);
     } catch (error: any) {
       console.error("Error submitting form:", error);
       toast({
