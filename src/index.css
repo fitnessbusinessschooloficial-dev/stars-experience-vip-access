@@ -49,7 +49,7 @@ All colors MUST be HSL.
     --shadow-card: 0 20px 60px -20px hsl(0 0% 0% / 0.5);
     
     /* Animations */
-    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .dark {
@@ -88,14 +88,31 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
     font-weight: 700;
+  }
+
+  /* GPU acceleration for animations */
+  .animate-slide-up,
+  .animate-fade-in,
+  .animate-pulse,
+  .animate-glow {
+    will-change: transform, opacity;
+    transform: translateZ(0);
   }
 }
 
@@ -119,68 +136,102 @@ All colors MUST be HSL.
   .transition-smooth {
     transition: var(--transition-smooth);
   }
+
+  /* Safe area for mobile */
+  .safe-padding {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
 }
 
-/* Mobile responsiveness fixes */
+/* Mobile optimizations */
 @media (max-width: 768px) {
-  body {
+  html, body {
     overflow-x: hidden;
+    width: 100%;
   }
 
+  /* Force all children to respect viewport */
+  #root {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  /* Container adjustments */
   .container {
     padding-left: 1rem;
     padding-right: 1rem;
     max-width: 100%;
+    width: 100%;
   }
 
-  /* Prevent horizontal scroll */
-  * {
-    max-width: 100vw;
+  /* Reduce animations on mobile for performance */
+  .animate-pulse {
+    animation: none;
   }
 
-  /* Fix grid layouts on mobile */
-  [class*="grid-cols-2"],
-  [class*="grid-cols-3"] {
-    grid-template-columns: 1fr !important;
+  /* Hide decorative blur elements on mobile */
+  .blur-\[120px\],
+  .blur-\[150px\],
+  .blur-\[200px\] {
+    display: none;
   }
 
-  /* Adjust text sizes for mobile */
+  /* Typography scaling */
   h1 {
-    font-size: 2rem !important;
+    font-size: 1.875rem !important;
     line-height: 1.2 !important;
   }
 
   h2 {
-    font-size: 1.75rem !important;
-    line-height: 1.3 !important;
+    font-size: 1.5rem !important;
+    line-height: 1.25 !important;
   }
 
   h3 {
-    font-size: 1.5rem !important;
+    font-size: 1.25rem !important;
     line-height: 1.3 !important;
   }
 
-  /* Better spacing on mobile */
+  /* Section padding */
   section {
     padding-top: 3rem !important;
     padding-bottom: 3rem !important;
   }
 
-  /* Fix form on mobile */
-  form input,
-  form button {
-    width: 100% !important;
-    font-size: 1rem !important;
+  /* Form optimizations */
+  input, button, select, textarea {
+    font-size: 16px !important; /* Prevents zoom on iOS */
   }
 
-  /* Better button sizing */
-  button {
-    padding: 0.75rem 1.5rem !important;
-    font-size: 0.875rem !important;
+  /* Reduce shadow complexity */
+  .shadow-gold,
+  .shadow-glow,
+  .shadow-card {
+    box-shadow: 0 4px 12px hsl(0 0% 0% / 0.3);
   }
 
-  /* Adjust animated blobs */
-  .absolute[class*="blur"] {
-    transform: scale(0.5);
+  /* Simpler backdrop blur on mobile */
+  .backdrop-blur-sm,
+  .backdrop-blur-xl {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: hsl(var(--card) / 0.95);
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 380px) {
+  .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  h1 {
+    font-size: 1.625rem !important;
+  }
+
+  h2 {
+    font-size: 1.375rem !important;
   }
 }

@@ -64,9 +64,9 @@ export const LeadCaptureForm = ({ variant = "section", origemForm }: LeadCapture
   const isHero = variant === "hero";
 
   return (
-    <form onSubmit={handleSubmit} className="w-full space-y-4">
-      <div className="space-y-2">
-        <Label htmlFor="name" className="text-foreground">
+    <form onSubmit={handleSubmit} className="w-full space-y-3 md:space-y-4">
+      <div className="space-y-1.5 md:space-y-2">
+        <Label htmlFor="name" className="text-foreground text-sm md:text-base">
           Nome Completo
         </Label>
         <Input
@@ -76,12 +76,12 @@ export const LeadCaptureForm = ({ variant = "section", origemForm }: LeadCapture
           onChange={(e) => setName(e.target.value)}
           required
           placeholder="Digite seu nome"
-          className="bg-card border-border text-foreground h-12 transition-smooth focus:border-primary"
+          className="bg-card border-border text-foreground h-11 md:h-12 text-base transition-smooth focus:border-primary"
         />
       </div>
       
-      <div className="space-y-2">
-        <Label htmlFor="email" className="text-foreground">
+      <div className="space-y-1.5 md:space-y-2">
+        <Label htmlFor="email" className="text-foreground text-sm md:text-base">
           E-mail
         </Label>
         <Input
@@ -91,12 +91,12 @@ export const LeadCaptureForm = ({ variant = "section", origemForm }: LeadCapture
           onChange={(e) => setEmail(e.target.value)}
           required
           placeholder="seu@email.com"
-          className="bg-card border-border text-foreground h-12 transition-smooth focus:border-primary"
+          className="bg-card border-border text-foreground h-11 md:h-12 text-base transition-smooth focus:border-primary"
         />
       </div>
       
-      <div className="space-y-2">
-        <Label htmlFor="phone" className="text-foreground">
+      <div className="space-y-1.5 md:space-y-2">
+        <Label htmlFor="phone" className="text-foreground text-sm md:text-base">
           Telefone (WhatsApp)
         </Label>
         <Input
@@ -106,27 +106,28 @@ export const LeadCaptureForm = ({ variant = "section", origemForm }: LeadCapture
           onChange={(e) => setPhone(e.target.value)}
           required
           placeholder="(11) 99999-9999"
-          className="bg-card border-border text-foreground h-12 transition-smooth focus:border-primary"
+          className="bg-card border-border text-foreground h-11 md:h-12 text-base transition-smooth focus:border-primary"
         />
       </div>
 
       <Button
         type="submit"
         disabled={loading}
-        className={`w-full h-14 bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg uppercase tracking-wide shadow-gold transition-smooth group ${isHero ? 'animate-glow' : ''}`}
+        className={`w-full h-12 md:h-14 bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-base md:text-lg uppercase tracking-wide shadow-gold transition-smooth group ${isHero ? 'animate-glow' : ''}`}
       >
         {loading ? (
           "Processando..."
         ) : (
           <>
-            <Sparkles className="mr-2 h-5 w-5" />
-            Quero meu acesso prioritário
-            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            <Sparkles className="mr-2 h-4 w-4 md:h-5 md:w-5" />
+            <span className="hidden sm:inline">Quero meu acesso prioritário</span>
+            <span className="sm:hidden">Quero acesso VIP</span>
+            <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5 group-hover:translate-x-1 transition-transform" />
           </>
         )}
       </Button>
       
-      <p className="text-xs text-muted-foreground text-center">
+      <p className="text-xs text-muted-foreground text-center px-2">
         Sem compromisso. Ao se cadastrar, você garante prioridade antes da abertura oficial.
       </p>
     </form>
