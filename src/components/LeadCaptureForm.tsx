@@ -45,9 +45,9 @@ export const LeadCaptureForm = ({ variant = "section", origemForm }: LeadCapture
       setEmail("");
       setPhone("");
 
-      // Redirect to checkout after successful submission
+      // Redirect to WhatsApp group after successful submission
       setTimeout(() => {
-        window.location.href = "https://pay.kiwify.com.br/5E7xAgI";
+        window.location.href = "https://chat.whatsapp.com/HbwHg9GWwAOCxIz4RAd5NH";
       }, 1500);
     } catch (error: any) {
       console.error("Error submitting form:", error);
