@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Client } from "https://deno.land/x/mysql@v2.12.1/mod.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -34,38 +34,43 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    console.log("Attempting to connect to MySQL database...");
+    console.log("Creating Supabase client...");
 
-    // Create MySQL connection
-    const client = await new Client().connect({
-      hostname: Deno.env.get("MYSQL_HOST") || "127.0.0.1",
-      port: parseInt(Deno.env.get("MYSQL_PORT") || "3306"),
-      db: Deno.env.get("MYSQL_DATABASE"),
-      username: Deno.env.get("MYSQL_USER"),
-      password: Deno.env.get("MYSQL_PASSWORD"),
-    });
+    // Create Supabase client with service role for inserting data
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    console.log("MySQL connection established successfully");
+    console.log("Inserting lead into database...", { nome, email, telefone: telefone || null, origem_form });
 
     // Insert lead into database
-    const query = `
-      INSERT INTO leads_stars_experience (nome, email, telefone, origem_form)
-      VALUES (?, ?, ?, ?)
-    `;
+    const { data, error } = await supabase
+      .from('leads_stars_experience')
+      .insert({
+        nome,
+        email,
+        telefone: telefone || null,
+        origem_form: origem_form || "unknown",
+      })
+      .select()
+      .single();
 
-    console.log("Executing insert query...", { nome, email, telefone: telefone || null, origem_form });
+    if (error) {
+      console.error("Error inserting lead:", error);
+      return new Response(
+        JSON.stringify({ 
+          error: "Erro ao salvar lead. Por favor, tente novamente.",
+          details: error.message 
+        }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
 
-    const result = await client.execute(query, [
-      nome,
-      email,
-      telefone || null,
-      origem_form || "unknown",
-    ]);
-
-    console.log("Lead inserted successfully:", result);
-
-    // Close connection
-    await client.close();
+    console.log("Lead inserted successfully:", data);
 
     return new Response(
       JSON.stringify({ 
